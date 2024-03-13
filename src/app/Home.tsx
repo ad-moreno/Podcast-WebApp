@@ -1,10 +1,10 @@
 import PodcastCard from '#/features/components/PodcastCard';
-import {USE_PODCASTS_QUERY_KEY, usePodcastsQuery} from '#/features/content/hooks';
+import {USE_PODCASTS_QUERY_KEY, usePodcasts} from '#/features/content/hooks';
 import {useIsFetching} from '@tanstack/react-query';
 import {useState, useCallback, ChangeEventHandler, useMemo} from 'react';
 
 const Home = () => {
-  const podcastsQuery = usePodcastsQuery();
+  const podcasts = usePodcasts();
 
   const [text, setText] = useState('');
   const handleChange = useCallback<ChangeEventHandler<HTMLInputElement>>(e => {
@@ -12,7 +12,7 @@ const Home = () => {
   }, []);
 
   const filteredPodcasts = useMemo(() => {
-    const allPodcasts = podcastsQuery.data ?? [];
+    const allPodcasts = podcasts ?? [];
     if (text.length === 0) return allPodcasts;
     const lowerText = text.toLowerCase();
     return allPodcasts.filter(
@@ -20,7 +20,7 @@ const Home = () => {
         podcast.title.label.toLowerCase().includes(lowerText) ||
         podcast['im:artist'].label.toLowerCase().includes(lowerText)
     );
-  }, [podcastsQuery.data, text]);
+  }, [podcasts, text]);
 
   const loading = useIsFetching({queryKey: [USE_PODCASTS_QUERY_KEY]}) > 0;
   if (loading) return null;

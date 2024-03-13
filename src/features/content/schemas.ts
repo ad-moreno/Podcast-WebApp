@@ -143,6 +143,8 @@ const PodcastEpisodeSchema = z.object({
   wrapperType: z.literal('track').or(z.literal('podcastEpisode')),
 });
 
+export type PodcastEpisode = z.infer<typeof PodcastEpisodeSchema>;
+
 export const PodcastEpisodesSchema = z.object({
   resultCount: z.number(),
   results: z.array(PodcastEpisodeSchema),

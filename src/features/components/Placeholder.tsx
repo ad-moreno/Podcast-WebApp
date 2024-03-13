@@ -18,6 +18,7 @@ const Placeholder = ({className, size, barClassName, ...props}: Props) => {
           <div
             key={`placeholder-${id}-${idx}`}
             className={classNames('h-2 rounded-full', dark ? 'bg-gray-300' : 'bg-gray-200', barClassName)}
+            data-testid="placeholder"
             style={{width}}
           />
         );

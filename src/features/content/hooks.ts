@@ -24,6 +24,11 @@ export const usePodcastEpisodesQuery = (podcastId: string) => {
   return query;
 };
 
+export const usePodcasts = () => {
+  const podcastsQuery = usePodcastsQuery();
+  return podcastsQuery.data;
+};
+
 export const usePodcast = (podcastId: string) => {
   const podcastsQuery = usePodcastsQuery();
   const podcast = useMemo(
