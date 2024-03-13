@@ -4,10 +4,6 @@ const LabelSchema = z.object({
   label: z.string(),
 });
 
-const ImageAttributesSchema = z.object({
-  height: z.string(),
-});
-
 const PriceAttributesSchema = z.object({
   amount: z.string(),
   currency: z.string(),
@@ -43,10 +39,16 @@ const ReleaseDateAttributesSchema = z.object({
   label: z.string(),
 });
 
+const ImageAttributesSchema = z.object({
+  height: z.string(),
+});
+
 const PodcastImageSchema = z.object({
   label: z.string(),
   attributes: ImageAttributesSchema.optional(),
 });
+
+export type PodcastImage = z.infer<typeof PodcastImageSchema>;
 
 const PodcastEntrySchema = z.object({
   'im:name': LabelSchema,
@@ -81,6 +83,8 @@ const PodcastEntrySchema = z.object({
   }),
 });
 
+export type PodcastEntry = z.infer<typeof PodcastEntrySchema>;
+
 const PodcastFeedSchema = z.object({
   author: z.object({
     name: LabelSchema,
@@ -101,37 +105,42 @@ const Genre = z
   .or(z.string());
 
 const PodcastEpisodeSchema = z.object({
-  wrapperType: z.string(),
-  kind: z.string(),
   artistId: z.number().optional(),
-  collectionId: z.number(),
-  trackId: z.number(),
   artistName: z.string().optional(),
-  collectionName: z.string(),
-  trackName: z.string(),
-  collectionCensoredName: z.string().optional(),
-  trackCensoredName: z.string().optional(),
-  artistViewUrl: z.string().url(),
-  collectionViewUrl: z.string().url(),
-  feedUrl: z.string().url().optional(),
-  trackViewUrl: z.string().url(),
+  artistViewUrl: z.string().url().optional(),
+  artworkUrl100: z.string().url().optional(),
+  artworkUrl160: z.string().url().optional(),
   artworkUrl30: z.string().url().optional(),
   artworkUrl60: z.string().url().optional(),
-  artworkUrl100: z.string().url().optional(),
-  collectionPrice: z.number().optional(),
-  trackPrice: z.number().optional(),
-  collectionHdPrice: z.number().optional(),
-  releaseDate: z.string().optional(),
+  artworkUrl600: z.string().url().optional(),
+  collectionCensoredName: z.string().optional(),
   collectionExplicitness: z.string().optional(),
-  trackExplicitness: z.string().optional(),
-  trackCount: z.number().optional(),
-  trackTimeMillis: z.number().optional(),
+  collectionHdPrice: z.number().optional(),
+  collectionId: z.number().optional(),
+  collectionName: z.string().optional(),
+  collectionPrice: z.number().optional(),
+  collectionViewUrl: z.string().url().optional(),
   country: z.string().optional(),
   currency: z.string().optional(),
-  primaryGenreName: z.string().optional(),
-  artworkUrl600: z.string().url().optional(),
+  description: z.string().optional(),
+  episodeUrl: z.string().optional(),
+  feedUrl: z.string().url().optional(),
   genreIds: z.array(z.string()).optional(),
   genres: z.array(Genre).optional(),
+  kind: z.literal('podcast').or(z.literal('podcast-episode')),
+  previewUrl: z.string().optional(),
+  primaryGenreName: z.string().optional(),
+  releaseDate: z.coerce.date().optional(),
+  shortDescription: z.string().optional(),
+  trackCensoredName: z.string().optional(),
+  trackCount: z.number().optional(),
+  trackExplicitness: z.string().optional(),
+  trackId: z.number(),
+  trackName: z.string(),
+  trackPrice: z.number().optional(),
+  trackTimeMillis: z.number().optional(),
+  trackViewUrl: z.string().url().optional(),
+  wrapperType: z.literal('track').or(z.literal('podcastEpisode')),
 });
 
 export const PodcastEpisodesSchema = z.object({

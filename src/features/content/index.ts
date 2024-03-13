@@ -11,11 +11,14 @@ export const getPodcasts = async () => {
 };
 
 export const getPodcastEpisodes = async (id: string) => {
-  const response = await fetch(`https://itunes.apple.com/lookup?id=${id}&media=podcast&entity=podcastEpisode&limit=20`);
-  const result = PodcastEpisodesSchema.safeParse(await response.json());
+  const targetUrl = `https://itunes.apple.com/lookup?id=${id}&media=podcast&entity=podcastEpisode&limit=20`;
+  const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(targetUrl)}`);
+  const json = await response.json();
+  const result = PodcastEpisodesSchema.safeParse(JSON.parse(json.contents));
   if (!result.success) {
     console.error(result.error);
     return null;
   }
-  return result.data;
+  const filteredEpisodes = result.data.results.filter(episode => episode.wrapperType === 'podcastEpisode');
+  return filteredEpisodes;
 };

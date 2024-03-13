@@ -1,18 +1,18 @@
-import { type Config } from 'tailwindcss'
-import { fontFamily } from 'tailwindcss/defaultTheme'
+import {type Config} from 'tailwindcss';
+import {fontFamily} from 'tailwindcss/defaultTheme';
 
 export default {
   content: ['./src/**/*.tsx'],
   theme: {
     extend: {
       colors: {
-        primary: '#EC1D24',
-        secondary: '#000000'
+        primary: '#0369a1',
+        secondary: '#FFFFFF',
       },
       fontFamily: {
-        sans: ['var(--font-sans)', ...fontFamily.sans]
-      }
-    }
+        sans: ['Lato', ...fontFamily.sans],
+      },
+    },
   },
-  plugins: []
-} satisfies Config
+  plugins: [],
+} satisfies Config;
